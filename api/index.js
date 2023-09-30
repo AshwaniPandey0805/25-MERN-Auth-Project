@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 import userRouter  from './routes/user.router.js';
+import authRouter from './routes/auth.router.js';
 
 mongoose.connect(process.env.MONGO)
 .then(()=>{
@@ -13,6 +14,7 @@ mongoose.connect(process.env.MONGO)
 });
 
 const app = express();
+app.use(express.json());
 
 app.listen(3000, ()=>{
     console.log('Server listening on port 3000');
@@ -20,3 +22,4 @@ app.listen(3000, ()=>{
 
 app.use('/api/user', userRouter);
 // app.use('/api/user', userRouter); => The code snippet, the router is mounted under the '/api/user' path, meaning that all rouutes defined on router the 'router' will be retrive to '/api/user'.
+app.use('/api/auth', authRouter);
