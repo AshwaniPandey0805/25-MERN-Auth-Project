@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import userRouter  from './routes/user.router.js';
 import authRouter from './routes/auth.router.js';
+import { errorHandle } from './utils/error.js';
 
 mongoose.connect(process.env.MONGO)
 .then(()=>{
@@ -33,7 +34,8 @@ app.use((err, req, res, next) =>{
 
     return res.status(statusCode).json({
         success : false,
+        statusCode,
         message,
-        statusCode // HTTP status code associated with the error
+
     });
 });
