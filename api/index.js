@@ -23,3 +23,17 @@ app.listen(3000, ()=>{
 app.use('/api/user', userRouter);
 // app.use('/api/user', userRouter); => The code snippet, the router is mounted under the '/api/user' path, meaning that all rouutes defined on router the 'router' will be retrive to '/api/user'.
 app.use('/api/auth', authRouter);
+
+// Initilizing middleware : The middleware function is design to catch error that occur during the execution of our application and send an appropriate JSON response with and error message and status code.
+app.use((err, req, res, next) =>{  
+    // next -> A callback function that passes control the next middleware in the chain or to an error-handling middleware if called with an argument(typically an error).
+
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+
+    return res.status(statusCode).json({
+        success : false,
+        message,
+        statusCode // HTTP status code associated with the error
+    });
+});

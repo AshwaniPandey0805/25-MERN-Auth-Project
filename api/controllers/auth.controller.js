@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
-export const signup = async (req, res) =>{
+export const signup = async (req, res, next) =>{
     const {username ,email, password} = req.body;
     // "req.body" -> In Express.js req.body is a property of thr HTTP request object ('req') that contains the data sent as the the request body. It is used to access data submitted on HTTP POST reauest when submitting forms or API request with the request body in JSON format.
 
@@ -26,7 +26,7 @@ export const signup = async (req, res) =>{
         });
         
     } catch (error) {
-        res.status(500).json(error.message); // status(500) -> Internal Server Error.
+        next(error); 
     }
     
 
