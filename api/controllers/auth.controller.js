@@ -41,14 +41,29 @@ export const signin =  async(req, res, next) =>{
     try {
         const validUser = await User.findOne({ email });
         
+        // 'await' : is a keyword, which suggests that this code is likely inside an 'async' function, as 'await' is used to wait for asynchronous operatio to complele.
+
+        // 'findOne' : is a query to find a user document in the database. 
+        
         if(!validUser) return next(errorHandle(404, 'User not found'));
         const validPassword = bcryptjs.compareSync(password, validUser.password);
         if(!validPassword) return next(errorHandle(401, 'Worng credentials' ));
         const token = jwt.sign({id : validUser._id }, process.env.JWT_SECRET);
+        const { password : hashPassword, ...rest} = validUser._doc;
+        
+        // { password : hashedPassword, ...rest } -> is an object destructuring pattern that extract properties from 'validUser._doc' and assigns them to a variable. 
+        // (...rest) -> The spread operator collects all the other properties from 'validUser._doc' into an object called rest.
+        // This code is offten in scenarios where we want to retrive a user from the database and then extract specific properties from the user document for further use.In this case we are extracting the password (possible for authentication purpose)  and collecting the remaining user data into the 'rest' object.
+        
+        const expiryDate = new Date(Date.now() + 3600000); // 1 hour
         res
-        .cookie('access_cookie', token, { httpOnly : true })
+        .cookie('access_cookie', token, { httpOnly : true, expires : expiryDate })
+
+        // .cookie() : is a method used to set cookies in the response.
+        // 'access_cookie' : is the name of the cookie. This is the identifier by which the cookie will ne stored on the client browser.
+        // { httpOnly : true } : is an options onject that configure the cookie. Setting 'httpOnly' to 'true' means that the cookie can only be accessed via HTTP request or modified by client-side JavaScript. This is a security measure to protect sensitive data, like authentication token, from potential cross-site scripting(XSS) attack.
         .status(200)
-        .json(validUser);
+        .json(rest);
 
     } catch (error) {
         next(error);
