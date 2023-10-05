@@ -94,7 +94,7 @@ export const google = async (req, res, next) =>{
             const newUser = new User({
                 username : 
                 req.body.name.split(' ').join('').toLowerCase() +
-                Math.floor(Math.random() * 10000).toString(),
+                Math.floor(Math.random() * 10000).toString(), // here is a aproblem have to check this.
                 email : req.body.email,
                 password : hasshPassword,
                 profilePicture : req.body.photo
