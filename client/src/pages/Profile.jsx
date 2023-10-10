@@ -84,7 +84,7 @@ export default function Profile() {
     return (
         <div className=' p-3 max-w-lg mx-auto ' >
             <h1 className='text-3xl font-bold text-center my-7'>Profile</h1>
-            <form onSubmit={handleSubmit}  className='flex flex-col gap-5' >
+            <form onSubmit={handleSubmit}  className='flex flex-col gap-3' >
                 <input 
                     type="file" 
                     ref={fileRef} 
@@ -98,7 +98,7 @@ export default function Profile() {
                 <img 
                     src={ formData.profilePicture || currentUser.profilePicture} 
                     alt="profile" 
-                    className="h-17 w-17  rounded-full object-cover mx-auto cursor-pointer mt-5 mb-7 " 
+                    className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2 " 
                     onClick={() => fileRef.current.click()}   
                     
                 />
@@ -116,23 +116,29 @@ export default function Profile() {
                     type="text" 
                     id="username" 
                     placeholder ="Username" 
-                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " />
+                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " 
                     onChange={handleChange}
+                    />
+                    
                     
                 <input 
                     defaultValue={currentUser.email} 
                     type="email" 
                     id="email" 
                     placeholder ="Email" 
-                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " />
+                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " 
                     onChange={handleChange}
+                    />
+                    
                 
                 <input 
                     type="Password" 
                     id="password" 
                     placeholder ="Password" 
-                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " />
+                    className=" bg-slate-200 p-2 rounded-lg w-full my-2  mx-auto  " 
                     onChange={handleChange}
+                    />
+                    
                 <button 
                     className = "bg-blue-500 text-white uppercase font-bold  p-3 rounded-lg w-full my-2  mx-auto hover:opacity-80" >
                         Update
