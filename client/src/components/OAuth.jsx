@@ -2,9 +2,12 @@ import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import  app  from "../firebase.js";
 import {useDispatch} from 'react-redux';
 import { signInSuccess } from "../redux/user/userSlice.js";
+import { useNavigate } from "react-router-dom";
 
 function OAuth() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
     const handleGoogleSignIn = async () => {
         try {
             const provider = new GoogleAuthProvider();
@@ -26,6 +29,8 @@ function OAuth() {
             const data = await res.json();
             console.log(data);
             dispatch(signInSuccess(data));
+            navigate('/');
+            
         } catch (error) {
             console.log("Google account error",error);
         }
