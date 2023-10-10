@@ -5,6 +5,7 @@ dotenv.config();
 import userRouter  from './routes/user.router.js';
 import authRouter from './routes/auth.router.js';
 import { errorHandle } from './utils/error.js';
+import cookieParser from 'cookie-parser';
 
 mongoose.connect(process.env.MONGO)
 .then(()=>{
@@ -14,8 +15,11 @@ mongoose.connect(process.env.MONGO)
     console.log(err);
 });
 
+
 const app = express();
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.listen(3000, ()=>{
     console.log('Server listening on port 3000');
@@ -24,6 +28,8 @@ app.listen(3000, ()=>{
 app.use('/api/user', userRouter);
 // app.use('/api/user', userRouter); => The code snippet, the router is mounted under the '/api/user' path, meaning that all rouutes defined on router the 'router' will be retrive to '/api/user'.
 app.use('/api/auth', authRouter);
+
+
 
 // Initilizing middleware : The middleware function is design to catch error that occur during the execution of our application and send an appropriate JSON response with and error message and status code.
 app.use((err, req, res, next) =>{  

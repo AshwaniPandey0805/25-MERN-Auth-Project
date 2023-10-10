@@ -1,5 +1,6 @@
 import express from 'express';
-import { test } from '../controllers/user.controller.js';
+import { test, updateUser } from '../controllers/user.controller.js';
+import { verifyUser } from '../utils/verifyUser.js';
 
 const router = express.Router();
 // 'router' -> router is nothing else a Express.js router object,
@@ -8,6 +9,7 @@ const router = express.Router();
 // Defining Router : We can define routes on this router by using HTTP methods like 'get', 'post', 'put', 'delete',
 
 router.get('/', test);
+router.post("/update/:id", verifyUser, updateUser);
 
 // one routes is defined using the router for handle GET request
 
