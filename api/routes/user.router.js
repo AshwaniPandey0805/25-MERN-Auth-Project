@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/', test);
 router.post("/update/:id", verifyUser, updateUser); // update the user functionality
-router.delete("/delete/:id", verifyUser, deleteUser);
+router.delete("/delete/:id", verifyUser, deleteUser); // delete the user functionality
 
 // one routes is defined using the router for handle GET request
 
